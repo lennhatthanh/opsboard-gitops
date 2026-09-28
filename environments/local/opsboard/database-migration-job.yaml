@@ -5,6 +5,11 @@ metadata:
   name: opsboard-database-migration
   namespace: opsboard
 
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+
   labels:
     app: opsboard
     component: database-migration

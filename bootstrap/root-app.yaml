@@ -11,7 +11,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/YOUR_GITHUB_USERNAME/opsboard-gitops.git
+    repoURL: https://github.com/lennhatthanh/opsboard-gitops.git
     targetRevision: main
     path: applications
 

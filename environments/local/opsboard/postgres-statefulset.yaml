@@ -4,7 +4,8 @@ kind: StatefulSet
 metadata:
   name: opsboard-postgres
   namespace: opsboard
-
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
   labels:
     app: opsboard
     component: postgres
