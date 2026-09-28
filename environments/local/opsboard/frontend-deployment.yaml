@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: opsboard-frontend
+  namespace: opsboard
+
+  labels:
+    app: opsboard
+    component: frontend
+
+spec:
+  replicas: 2
+
+  strategy:
+    type: RollingUpdate
+
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+
+  selector:
+    matchLabels:
+      app: opsboard
+      component: frontend
+
+  template:
+    metadata:
+      labels:
+        app: opsboard
+        component: frontend
+
+    spec:
+      securityContext:
+        runAsNonRoot: true
+
+        seccompProfile:
+          type: RuntimeDefault
+
+      containers:
+        - name: frontend
+          image: opsboard-web:0.1.0
+          imagePullPolicy: Never
+
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+
+            limits:
+              cpu: 200m
+              memory: 128Mi
+
+          securityContext:
+            allowPrivilegeEscalation: false
+
+            capabilities:
+              drop:
+                - ALL

@@ -1,0 +1,68 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: opsboard-database-migration
+  namespace: opsboard
+
+  labels:
+    app: opsboard
+    component: database-migration
+
+spec:
+  backoffLimit: 3
+
+  template:
+    metadata:
+      labels:
+        app: opsboard
+        component: database-migration
+
+    spec:
+      restartPolicy: OnFailure
+
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: migration
+          image: opsboard-api:0.1.0
+          imagePullPolicy: Never
+
+          command:
+            - sh
+            - -c
+
+          args:
+            - |
+              set -eu
+              npm run migrate
+              npm run seed
+
+          env:
+            - name: DATABASE_URL
+
+              valueFrom:
+                secretKeyRef:
+                  name: opsboard-postgres-secret
+                  key: DATABASE_URL
+
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+
+            limits:
+              cpu: 250m
+              memory: 256Mi
+
+          securityContext:
+            allowPrivilegeEscalation: false
+
+            capabilities:
+              drop:
+                - ALL
