@@ -12,3 +12,12 @@ resources:
   - postgres-statefulset.yaml
   - database-migration-job.yaml
   - ingress.yaml
+
+images:
+  - name: opsboard-api
+    newName: ghcr.io/lennhatthanh/opsboard-api
+    newTag: 92f55fbada77363b2b1c698197f1d5d09fb16225
+
+  - name: opsboard-web
+    newName: ghcr.io/lennhatthanh/opsboard-web
+    newTag: 92f55fbada77363b2b1c698197f1d5d09fb16225

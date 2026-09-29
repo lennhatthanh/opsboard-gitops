@@ -36,7 +36,7 @@ spec:
       containers:
         - name: migration
           image: opsboard-api:0.1.0
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
 
           command:
             - sh
