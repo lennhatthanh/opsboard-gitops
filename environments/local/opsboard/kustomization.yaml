@@ -16,8 +16,8 @@ resources:
 images:
   - name: opsboard-api
     newName: ghcr.io/lennhatthanh/opsboard-api
-    newTag: 8c7145ad02396844eab16b408a04ea24f89e1da5
+    newTag: 62259dd6800f26f2c0eba9adc06383055f1d4859
 
   - name: opsboard-web
     newName: ghcr.io/lennhatthanh/opsboard-web
-    newTag: 8c7145ad02396844eab16b408a04ea24f89e1da5
+    newTag: 62259dd6800f26f2c0eba9adc06383055f1d4859
